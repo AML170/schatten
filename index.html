@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Schatten</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="app">
+    <header class="app__header">
+      <div class="language" role="group" aria-label="Language / Sprache / اللغة">
+        <button class="language__button ist-aktiv" data-lang="en" aria-pressed="true">English</button>
+        <button class="language__button" data-lang="de" aria-pressed="false">Deutsch</button>
+        <button class="language__button" data-lang="ar" aria-pressed="false">العربية</button>
+      </div>
+      <h1 data-i18n="appTitle">Schatten</h1>
+      <p class="app__subtitle" data-i18n="subtitle">Your German immersion library: read, shadow, collect words.</p>
+      <p class="stats-leiste">
+        <span class="stat"><b id="stat-words">0</b> <span data-i18n="statWords">words collected</span></span>
+        <span class="stat"><b id="stat-streak">0</b> <span data-i18n="statStreak">day streak</span></span>
+      </p>
+    </header>
+
+    <nav class="nav" aria-label="Sections">
+      <button class="nav__button ist-aktiv" data-view="library" data-i18n="navLibrary" aria-pressed="true">Texts</button>
+      <button class="nav__button" data-view="cards" data-i18n="navCards" aria-pressed="false">Flashcards</button>
+      <button class="nav__button" data-view="game" data-i18n="navGame" aria-pressed="false">Word game</button>
+      <button class="nav__button" data-view="week" data-i18n="navWeek" aria-pressed="false">My week</button>
+      <button class="nav__button" data-view="full" data-i18n="navFull" aria-pressed="false">Full version</button>
+    </nav>
+
+    <!-- ===================== Texts ===================== -->
+    <section id="view-library" class="view">
+      <h2 data-i18n="libraryTitle">Graded texts</h2>
+      <p class="hinweis" data-i18n="libraryHint">Pick a text at your level. Click any word while reading to look it up.</p>
+      <div id="text-list" class="textliste"></div>
+
+      <h2 data-i18n="ownTitle">Your own texts</h2>
+      <p class="hinweis" data-i18n="ownHint">Paste any German text, for example a song lyric or an article, and read it here.</p>
+      <form id="own-form" class="formular">
+        <input type="text" id="own-title" class="formular__eingabe" data-i18n-placeholder="ownTitlePlaceholder" placeholder="Title, e.g. My favourite song...">
+        <textarea id="own-text" class="formular__eingabe" rows="4" data-i18n-placeholder="ownTextPlaceholder" placeholder="Paste the German text here..."></textarea>
+        <button type="submit" class="knopf" data-i18n="ownAdd">Save text</button>
+      </form>
+      <div id="own-list" class="textliste"></div>
+    </section>
+
+    <!-- ===================== Reader ===================== -->
+    <section id="view-reader" class="view versteckt">
+      <button id="reader-back" class="knopf knopf--klein" data-i18n="back">Back to texts</button>
+      <h2 id="reader-title"></h2>
+      <p class="hinweis" data-i18n="readerHint">Click a word to see its meaning. Words you look up are saved to your flashcards automatically.</p>
+      <article id="reader-content" class="lesebereich"></article>
+    </section>
+
+    <!-- ===================== Flashcards ===================== -->
+    <section id="view-cards" class="view versteckt">
+      <h2 data-i18n="cardsTitle">Your flashcards</h2>
+      <p class="hinweis"><span id="cards-count">0</span> <span data-i18n="cardsSaved">words saved</span></p>
+
+      <div class="karten-modi">
+        <button id="mode-review" class="nav__button ist-aktiv" data-i18n="modeReview" aria-pressed="true">Review</button>
+        <button id="mode-quiz" class="nav__button" data-i18n="modeQuiz" aria-pressed="false">Quiz</button>
+      </div>
+
+      <div id="review-box">
+        <div id="karte" class="karteikarte">
+          <p id="karte-front" class="karteikarte__wort"></p>
+          <p id="karte-back" class="karteikarte__bedeutung versteckt"></p>
+          <p id="karte-quelle" class="karteikarte__quelle"></p>
+        </div>
+        <div class="karten-knöpfe">
+          <button id="card-flip" class="knopf knopf--klein" data-i18n="cardFlip">Flip</button>
+          <button id="card-know" class="knopf knopf--klein" data-i18n="cardKnow">I knew it</button>
+          <button id="card-again" class="knopf knopf--klein" data-i18n="cardAgain">Again</button>
+          <button id="card-delete" class="knopf knopf--klein knopf--gefahr" data-i18n="cardDelete">Delete</button>
+        </div>
+        <p id="cards-empty" class="hinweis versteckt" data-i18n="cardsEmpty">No flashcards yet. Click words in a text or video script to save them.</p>
+      </div>
+
+      <div id="quiz-box" class="versteckt">
+        <p id="quiz-score" class="hinweis"></p>
+        <label class="quiz-quelle">
+          <span data-i18n="quizScope">Words from:</span>
+          <select id="quiz-source"></select>
+        </label>
+        <p id="quiz-question" class="quiz__frage"></p>
+        <div id="quiz-options" class="quiz__optionen"></div>
+        <p id="quiz-feedback" class="hinweis"></p>
+        <button id="quiz-next" class="knopf versteckt" data-i18n="quizNext">Next question</button>
+        <button id="quiz-start" class="knopf" data-i18n="quizStart">Start quiz</button>
+        <p id="quiz-hint" class="hinweis versteckt" data-i18n="quizHint">The quiz needs at least 4 saved words with a known meaning.</p>
+      </div>
+    </section>
+
+    <!-- ===================== Word game ===================== -->
+    <section id="view-game" class="view versteckt">
+      <h2 data-i18n="gameTitle">Matching game</h2>
+      <p class="hinweis" data-i18n="gameHint">Match each German word with its meaning. The game uses your own flashcards.</p>
+      <button id="game-start" class="knopf" data-i18n="gameStart">New game</button>
+      <p id="game-info" class="hinweis"></p>
+      <div id="game-grid" class="spielfeld"></div>
+    </section>
+
+    <!-- ===================== Full version (extension) ===================== -->
+    <section id="view-full" class="view versteckt">
+      <h2 data-i18n="fullTitle">Get the full version</h2>
+      <p class="hinweis" data-i18n="fullText">This website is the library. The full version is a small, free add-on for Chrome on a laptop: it shows the script of any YouTube video automatically, line by line, with shadowing, slow replay and voice recording.</p>
+      <p><a id="full-download" class="knopf knopf--link" href="#" data-i18n="fullDownload">Download the full version (free)</a></p>
+      <ol class="schritte">
+        <li>
+          <span data-i18n="fullStep1">Download the file above and unzip it (double-click it).</span>
+          <svg viewBox="0 0 220 90" class="schritte__bild" aria-hidden="true"><rect x="10" y="10" width="200" height="70" rx="8" fill="#eef2ff" stroke="#4f46e5"/><text x="110" y="40" text-anchor="middle" font-size="13" fill="#4f46e5">⬇ schatten-main.zip</text><text x="110" y="62" text-anchor="middle" font-size="11" fill="#6b7280">→ 📂 schatten-main</text></svg>
+        </li>
+        <li>
+          <span data-i18n="fullStep2">Open Chrome on the laptop and type chrome://extensions in the address bar.</span>
+          <svg viewBox="0 0 220 90" class="schritte__bild" aria-hidden="true"><rect x="10" y="10" width="200" height="70" rx="8" fill="#ffffff" stroke="#d8dee4"/><rect x="18" y="20" width="184" height="22" rx="11" fill="#f3f4f6" stroke="#d8dee4"/><text x="30" y="35" font-size="11" fill="#1f2937">chrome://extensions</text><circle cx="30" cy="60" r="4" fill="#4f46e5"/><text x="42" y="64" font-size="11" fill="#6b7280">Chrome</text></svg>
+        </li>
+        <li>
+          <span data-i18n="fullStep3">Turn on Developer mode at the top right.</span>
+          <svg viewBox="0 0 220 90" class="schritte__bild" aria-hidden="true"><rect x="10" y="10" width="200" height="70" rx="8" fill="#ffffff" stroke="#d8dee4"/><rect x="130" y="20" width="70" height="20" rx="6" fill="#f3f4f6" stroke="#d8dee4"/><text x="136" y="34" font-size="9" fill="#1f2937">Developer mode</text><rect x="182" y="52" width="26" height="14" rx="7" fill="#4f46e5"/><circle cx="201" cy="59" r="5" fill="#ffffff"/></svg>
+        </li>
+        <li>
+          <span data-i18n="fullStep4">Click Load unpacked and choose the unzipped folder.</span>
+          <svg viewBox="0 0 220 90" class="schritte__bild" aria-hidden="true"><rect x="10" y="10" width="200" height="70" rx="8" fill="#ffffff" stroke="#d8dee4"/><rect x="20" y="24" width="100" height="24" rx="6" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/><text x="30" y="40" font-size="10" fill="#4f46e5">Load unpacked</text><text x="20" y="66" font-size="10" fill="#6b7280">📂 schatten-main</text></svg>
+        </li>
+        <li>
+          <span data-i18n="fullStep5">Done! Open any YouTube video with subtitles: the script appears next to it.</span>
+          <svg viewBox="0 0 220 90" class="schritte__bild" aria-hidden="true"><rect x="10" y="10" width="120" height="70" rx="8" fill="#1f2937"/><polygon points="55,35 85,45 55,55" fill="#ffffff"/><rect x="136" y="10" width="74" height="70" rx="8" fill="#eef2ff" stroke="#4f46e5"/><line x1="144" y1="26" x2="202" y2="26" stroke="#4f46e5" stroke-width="3"/><line x1="144" y1="40" x2="202" y2="40" stroke="#c7d2fe" stroke-width="3"/><line x1="144" y1="54" x2="202" y2="54" stroke="#c7d2fe" stroke-width="3"/></svg>
+        </li>
+      </ol>
+      <p class="hinweis" data-i18n="fullNote">Works with Chrome on a laptop or computer. Completely free, no account needed.</p>
+    </section>
+
+    <!-- ===================== My week ===================== -->
+    <section id="view-week" class="view versteckt">
+      <h2 data-i18n="weekTitle">My German week</h2>
+      <p class="hinweis" data-i18n="weekHint">Your last 7 days as a card. Download it and share your progress!</p>
+      <canvas id="week-canvas" class="wochenkarte" width="800" height="420"></canvas>
+      <div class="karten-knöpfe">
+        <button id="week-download" class="knopf" data-i18n="weekDownload">Download as image</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="ueber">
+    <strong>Schatten</strong> · <span data-i18n="aboutMade">made by Moly Ashraf</span> ·
+    <a href="https://github.com/AML170" target="_blank" rel="noopener">github.com/AML170</a>
+  </footer>
+
+  <!-- Dictionary popup -->
+  <div id="dict-panel" class="woerterbuch versteckt" role="dialog" aria-label="Dictionary">
+    <button id="dict-close" class="woerterbuch__schliessen" aria-label="Close">×</button>
+    <p id="dict-word" class="woerterbuch__wort"></p>
+    <p id="dict-en" class="woerterbuch__bedeutung"></p>
+    <p id="dict-ar" class="woerterbuch__bedeutung woerterbuch__bedeutung--ar"></p>
+    <p id="dict-hint" class="woerterbuch__hinweis"></p>
+    <p id="dict-saved" class="woerterbuch__gespeichert" data-i18n="dictSaved">Saved to your flashcards</p>
+  </div>
+
+  <script src="js/i18n.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/core.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/library.js"></script>
+</body>
+</html>
