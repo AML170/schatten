@@ -79,7 +79,7 @@ function showView(name) {
 function renderLibrary() {
   const list = $("text-list");
   list.innerHTML = "";
-  for (const level of ["A1", "A2", "B1", "B2"]) {
+  for (const level of ["A1", "A2", "B1", "B2", "C1", "C2"]) {
     const group = TEXTS.filter((text) => text.level === level);
     if (!group.length) continue;
     const heading = el("h3", "textliste__ebene", level);
