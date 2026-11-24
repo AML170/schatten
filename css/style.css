@@ -1,0 +1,479 @@
+/**
+ * Schatten - style.css
+ * Styles for the extension's own pages (library.html, popup.html).
+ * The YouTube panel has its own stylesheet (css/panel.css).
+ */
+
+:root {
+  --farbe-primaer: #4f46e5;
+  --farbe-primaer-dunkel: #4338ca;
+  --farbe-hintergrund: #f6f7fb;
+  --farbe-karte: #ffffff;
+  --farbe-text: #1f2937;
+  --farbe-gedaempft: #6b7280;
+  --farbe-rahmen: #e5e7eb;
+  --farbe-gruen: #15803d;
+  --farbe-gruen-hell: #bbf7d0;
+  --farbe-rot: #b91c1c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--farbe-hintergrund);
+  color: var(--farbe-text);
+  line-height: 1.5;
+}
+
+.app {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.app__header {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.app__header h1 {
+  margin: 12px 0 4px 0;
+  color: var(--farbe-primaer);
+}
+
+.app__subtitle {
+  color: var(--farbe-gedaempft);
+  margin: 0;
+}
+
+.stats-leiste {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin: 10px 0 0 0;
+  color: var(--farbe-gedaempft);
+  font-size: 14px;
+}
+
+.stats-leiste b {
+  color: var(--farbe-primaer);
+  font-size: 20px;
+}
+
+.language {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.language__button {
+  border: 1px solid var(--farbe-rahmen);
+  background: var(--farbe-karte);
+  border-radius: 8px;
+  padding: 4px 12px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.language__button.ist-aktiv {
+  background: var(--farbe-primaer);
+  border-color: var(--farbe-primaer);
+  color: #ffffff;
+}
+
+.nav {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.nav__button {
+  border: 1px solid var(--farbe-rahmen);
+  background: var(--farbe-karte);
+  border-radius: 999px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.nav__button.ist-aktiv {
+  background: var(--farbe-primaer);
+  border-color: var(--farbe-primaer);
+  color: #ffffff;
+}
+
+.view {
+  background: var(--farbe-karte);
+  border: 1px solid var(--farbe-rahmen);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.versteckt {
+  display: none !important;
+}
+
+.hinweis {
+  color: var(--farbe-gedaempft);
+  font-size: 14px;
+}
+
+.textliste {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.textliste__ebene {
+  margin: 10px 0 2px 0;
+  color: var(--farbe-primaer);
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.textliste__eintrag {
+  text-align: start;
+  border: 1px solid var(--farbe-rahmen);
+  background: var(--farbe-karte);
+  border-radius: 10px;
+  padding: 12px 14px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.textliste__eintrag:hover {
+  border-color: var(--farbe-primaer);
+}
+
+.textliste__eintrag--eigen {
+  border-style: dashed;
+}
+
+.textliste__titel {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0;
+  text-align: start;
+  flex: 1;
+}
+
+.formular {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.formular__eingabe {
+  border: 1px solid var(--farbe-rahmen);
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 15px;
+  font-family: inherit;
+}
+
+.knopf {
+  background: var(--farbe-primaer);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 15px;
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+.knopf:hover {
+  background: var(--farbe-primaer-dunkel);
+}
+
+.knopf--klein {
+  padding: 6px 12px;
+  font-size: 14px;
+}
+
+.knopf--gefahr {
+  background: var(--farbe-rot);
+}
+
+.lesebereich {
+  font-size: 19px;
+  line-height: 2;
+}
+
+.wort {
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 0 1px;
+}
+
+.wort:hover {
+  background: #fde68a;
+}
+
+.wort--bekannt {
+  background: var(--farbe-gruen-hell);
+  color: var(--farbe-gruen);
+}
+
+.karten-modi {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.karteikarte {
+  border: 2px solid var(--farbe-primaer);
+  border-radius: 12px;
+  padding: 32px;
+  text-align: center;
+  margin-bottom: 12px;
+  min-height: 120px;
+}
+
+.karteikarte__wort {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.karteikarte__bedeutung {
+  font-size: 20px;
+  color: var(--farbe-primaer);
+  margin: 12px 0 0 0;
+}
+
+.karteikarte__quelle {
+  color: var(--farbe-gedaempft);
+  font-size: 13px;
+  margin: 16px 0 0 0;
+}
+
+.karten-knöpfe {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.quiz__frage {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.quiz__optionen {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.quiz__option {
+  border: 1px solid var(--farbe-rahmen);
+  background: var(--farbe-karte);
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: start;
+}
+
+.quiz__option:hover {
+  border-color: var(--farbe-primaer);
+}
+
+.quiz-quelle {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: var(--farbe-gedaempft);
+}
+
+.quiz-quelle select {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--farbe-rahmen);
+  font-size: 14px;
+}
+
+.spielfeld {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.spielfeld__karte {
+  border: 1px solid var(--farbe-rahmen);
+  background: var(--farbe-karte);
+  border-radius: 10px;
+  padding: 18px 8px;
+  font-size: 15px;
+  cursor: pointer;
+  min-height: 60px;
+}
+
+.spielfeld__karte--offen {
+  border-color: var(--farbe-primaer);
+  background: #eef2ff;
+}
+
+.spielfeld__karte--gefunden {
+  background: var(--farbe-gruen-hell);
+  border-color: var(--farbe-gruen);
+  cursor: default;
+}
+
+.wochenkarte {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--farbe-rahmen);
+  margin-bottom: 12px;
+}
+
+/* Dictionary popup */
+.woerterbuch {
+  position: fixed;
+  bottom: 16px;
+  inset-inline: 16px;
+  max-width: 520px;
+  margin: 0 auto;
+  background: var(--farbe-karte);
+  border: 2px solid var(--farbe-primaer);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  z-index: 10;
+}
+
+.woerterbuch__wort {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+}
+
+.woerterbuch__bedeutung {
+  margin: 2px 0;
+}
+
+.woerterbuch__bedeutung--ar {
+  direction: rtl;
+  text-align: start;
+  color: #0f766e;
+  font-size: 17px;
+}
+
+.woerterbuch__hinweis {
+  font-size: 13px;
+  color: var(--farbe-gedaempft);
+  margin: 8px 0 0 0;
+}
+
+.woerterbuch__gespeichert {
+  color: var(--farbe-gruen);
+  font-size: 13px;
+  font-weight: 600;
+  margin: 8px 0 0 0;
+}
+
+.woerterbuch__schliessen {
+  position: absolute;
+  top: 6px;
+  inset-inline-end: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--farbe-gedaempft);
+}
+
+/* RTL fine-tuning */
+[dir="rtl"] .knopf,
+[dir="rtl"] .textliste__eintrag {
+  font-family: inherit;
+}
+
+/* About footer with the maker's name */
+.ueber {
+  text-align: center;
+  color: var(--farbe-gedaempft);
+  font-size: 14px;
+  padding: 20px 0 30px 0;
+}
+
+.ueber a {
+  color: var(--farbe-primaer);
+}
+
+/* Full-version install guide */
+.schritte {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 16px 0;
+}
+
+.schritte li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid var(--farbe-rahmen);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 15px;
+}
+
+.schritte li::before {
+  content: counter(schritt);
+}
+
+.schritte {
+  counter-reset: schritt;
+}
+
+.schritte li {
+  counter-increment: schritt;
+}
+
+.schritte li::before {
+  content: counter(schritt);
+  background: var(--farbe-primaer);
+  color: #ffffff;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.schritte__bild {
+  width: 180px;
+  flex-shrink: 0;
+  border-radius: 8px;
+}
+
+@media (max-width: 560px) {
+  .schritte li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
