@@ -54,6 +54,7 @@ function setLanguage(next) {
   renderCard();
   renderQuizScore();
   renderWeek();
+  renderSearch();
 }
 
 function renderStats() {
@@ -88,6 +89,66 @@ function renderLibrary() {
       button.addEventListener("click", () => openText(text, "text:" + text.id));
       list.appendChild(button);
     }
+  }
+}
+
+
+// --- Search: across graded texts (title, level, topic words) and the dictionary ---
+function renderSearch() {
+  const input = $("search-input");
+  const box = $("search-results");
+  if (!input || !box) return;
+  const q = input.value.trim().toLowerCase();
+  const list = $("text-list");
+  if (!q) {
+    box.classList.add("versteckt");
+    box.innerHTML = "";
+    if (list) list.classList.remove("versteckt");
+    return;
+  }
+  const texts = TEXTS.filter((text) => {
+    const hay = [
+      text.level,
+      text.title.en,
+      text.title.de,
+      text.title.ar,
+      text.text,
+    ].join(" ").toLowerCase();
+    return hay.includes(q);
+  });
+  const words = Object.entries(DICTIONARY)
+    .filter(([key, [en, ar]]) =>
+      key.includes(q) || en.toLowerCase().includes(q) || ar.includes(q)
+    )
+    .slice(0, 24);
+  if (list) list.classList.add("versteckt");
+  box.classList.remove("versteckt");
+  box.innerHTML = "";
+  if (!texts.length && !words.length) {
+    box.appendChild(el("p", "hinweis", dblT(lang, "searchNone")));
+    return;
+  }
+  if (texts.length) {
+    box.appendChild(el("h3", "textliste__ebene", dblT(lang, "searchTexts")));
+    const wrap = el("div", "textliste");
+    for (const text of texts) {
+      const button = el(
+        "button",
+        "textliste__eintrag",
+        text.level + " · " + (text.title[lang] || text.title.en)
+      );
+      button.addEventListener("click", () => openText(text, "text:" + text.id));
+      wrap.appendChild(button);
+    }
+    box.appendChild(wrap);
+  }
+  if (words.length) {
+    box.appendChild(el("h3", "textliste__ebene", dblT(lang, "searchWords")));
+    const wrap = el("div", "wortliste");
+    for (const [key, [en, ar]] of words) {
+      wrap.appendChild(el("div", "wortliste__eintrag", key + " — " + en + " — " + ar));
+    }
+    box.appendChild(wrap);
   }
 }
 
@@ -411,6 +472,7 @@ $("own-form").addEventListener("submit", async (event) => {
 });
 
 $("reader-back").addEventListener("click", () => showView("library"));
+$("search-input").addEventListener("input", renderSearch);
 $("dict-close").addEventListener("click", () =>
   $("dict-panel").classList.add("versteckt")
 );
