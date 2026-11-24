@@ -477,3 +477,26 @@ body {
     align-items: flex-start;
   }
 }
+
+/* --- Search --- */
+.suche {
+  margin: 0 0 16px;
+}
+
+.suche-ergebnisse .textliste__ebene {
+  margin: 18px 0 8px;
+}
+
+.wortliste {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.wortliste__eintrag {
+  padding: 8px 12px;
+  border: 1px solid var(--farbe-rahmen);
+  border-radius: 10px;
+  background: var(--farbe-karte);
+  font-size: 0.95rem;
+}
